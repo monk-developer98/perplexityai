@@ -1,12 +1,16 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router'
+import { Link,useNavigate } from 'react-router'
+import {useAuth} from "../hook/useAuth"
 
 const Register = () => {
     const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const navigate = useNavigate()
 
-  const submitForm = (event) => {
+    const {handleRegister} = useAuth()
+
+  const submitForm = async (event) => {
     event.preventDefault()
 
     const payload = {
@@ -14,8 +18,8 @@ const Register = () => {
       email,
       password,
     }
-
-    console.log('Register payload:', payload)
+    await handleRegister(payload)
+    navigate("/login")
   }
   return (
     <section className="min-h-screen bg-zinc-950 px-4 py-10 text-zinc-100 sm:px-6 lg:px-8">
